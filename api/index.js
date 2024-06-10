@@ -8,18 +8,22 @@ import listingRouter from "./routes/listing.route.js";
 import path from "path";
 
 dotenv.config();
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log("Mongo is connected!");
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-
-const _dirname = path.resolve();
 
 const app = express();
+
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("MongoDB is connected!");
+  })
+  .catch((error) => {
+    console.error("Error connecting to MongoDB:", error);
+  });
+
+const __dirname = path.resolve();
 
 app.use(express.json());
 app.use(cookieParser());
@@ -28,24 +32,27 @@ app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/listing", listingRouter);
 
-app.use(express.static(path.join(_dirname, "/frontend/dist")));
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
 /* Ciao! */
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(_dirname, "frontend", "dist", "index.html"));
+  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
 });
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000!");
-});
-
+// Error handling middleware
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal server error";
-  return res.status(statusCode).json({
+  res.status(statusCode).json({
     success: false,
     statusCode,
     message,
   });
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}!`);
 });
