@@ -14,7 +14,7 @@ mongoose
     console.log("Mongo is connected!");
   })
   .catch((error) => {
-    console.log(err);
+    console.log(error);
   });
 
 const _dirname = path.resolve();
