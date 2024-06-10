@@ -30,6 +30,8 @@ app.use("/api/listing", listingRouter);
 
 app.use(express.static(path.join(_dirname, "/frontend/dist")));
 
+/* Ciao! */
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(_dirname, "frontend", "dist", "index.html"));
 });
