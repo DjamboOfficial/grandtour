@@ -15,7 +15,7 @@ export default function Home() {
   useEffect(() => {
     const fetchOfferListings = async () => {
       try {
-        const res = await fetch("/api/listing/get?offer=true&limit=4");
+        const res = await fetch("/api/listing/get?offer=true&limit=6");
         const data = await res.json();
         setOfferListings(data);
         fetchRentListings();
@@ -25,7 +25,7 @@ export default function Home() {
     };
     const fetchRentListings = async () => {
       try {
-        const res = await fetch("/api/listing/get?type=rent&limit=4");
+        const res = await fetch("/api/listing/get?type=rent&limit=6");
         const data = await res.json();
         setRentListings(data);
         fetchSaleListings();
@@ -50,15 +50,14 @@ export default function Home() {
       {/* top */}
       <div className="flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto">
         <h1 className="text-slate-700 font-bold text-3xl lg:text-6xl">
-          Find your next <span className="text-slate-500">perfect</span>
+          Enjoy <span className="text-slate-500">Berlin</span>
           <br />
-          place with ease
+          to the fullest
         </h1>
         <div className="text-gray-400 text-xs sm:text-sm">
-          Sahand Estate is the best place to find your next perfect place to
-          live.
+          Our platform is the best place
           <br />
-          We have a wide range of properties for you to choose from.
+          to find your dream home in the German capital.{" "}
         </div>
         <Link
           to={"/search"}
@@ -66,6 +65,11 @@ export default function Home() {
         >
           Let's get started...
         </Link>
+        <img
+          className="h-[300px] w-[300px] rounded-lg shadow-lg mx-auto sm:h-16 sm:w-16 sm:rounded-xl sm:shadow-xl"
+          src="https://res.cloudinary.com/dgwvbd9ki/image/upload/v1718098969/portfolio/Screenshot_2024-06-11_alle_11.42.21_d7bowz.png"
+          alt="logo"
+        />
       </div>
 
       {/* swiper */}
